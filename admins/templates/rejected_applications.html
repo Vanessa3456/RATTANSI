@@ -1,0 +1,35 @@
+{% extends 'admin_homepage.html' %}
+
+{% block content %}
+<h2>Rejected Applications</h2>
+
+<!-- Search Form -->
+<form method="GET" class="search-form">
+    <input type="text" name="search" placeholder="Search by student name..." value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
+
+
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Registration Number</th>
+            <th>Application Status</th>
+            <th>Submitted At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for app in rejected_apps %}
+        <tr>
+            <td>{{ app.student.username }}</td>
+            <td>{{ app.status }}</td>
+            <td>{{ app.submitted_at }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No rejected applications found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

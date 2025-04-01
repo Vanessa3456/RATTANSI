@@ -1,0 +1,77 @@
+/* Center the container */
+.approved-applications-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Heading */
+.approved-applications-container h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Search & Sort Form */
+.search-sort-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-sort-form input,
+.search-sort-form select,
+.search-sort-form button {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-sort-form input {
+    flex: 1; /* Makes input take most of the space */
+}
+
+.search-sort-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-sort-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Styled Table */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.styled-table thead {
+    background: #007bff;
+    color: white;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-sort-form {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,26 @@
+{% extends 'admin_homepage.html' %}
+{% block content %}
+<h2>Pending Applications</h2>
+
+{% if pending_apps %}
+<table border="1">
+    <tr>
+        <th>Student</th>
+        <th>Date Submitted</th>
+        <th>Action</th>
+    </tr>
+    {% for app in pending_apps %}
+    <tr>
+        <td>{{ app.reg_no }}</td>
+        <td>{{ app.submitted_at }}</td>
+        <td>
+            <a href="{% url 'review_application_details' app.id%}">Review</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No pending applications.</p>
+{% endif %}
+
+{% endblock %}

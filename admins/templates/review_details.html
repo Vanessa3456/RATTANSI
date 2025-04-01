@@ -1,0 +1,75 @@
+{% extends 'admin_homepage.html' %}
+{% block content %}
+<div class="application-review-container">
+    <h2>Application Review</h2>
+
+    <div class="student-info">
+        <p><strong>Student:</strong> {{ application.student.username }}</p>
+        <p><strong>Date Submitted:</strong> {{ application.submitted_at }}</p>
+    </div>
+
+    <!-- Personal Details -->
+    <div class="section">
+        <h3>Personal Details</h3>
+        <p><strong>Name:</strong> {{ application.name }}</p>
+        <p><strong>Registration Number:</strong> {{ application.reg_no }}</p>
+        <p><strong>School:</strong> {{ application.school }}</p>
+        <p><strong>Gender:</strong> {{ application.gender }}</p>
+        <p><strong>Home Address:</strong> {{ application.home_address }}</p>
+        <p><strong>Phone Number:</strong> {{ application.phone_number }}</p>
+        <p><strong>County:</strong> {{ application.county }}</p>
+        <p><strong>Next of Kin:</strong> {{ application.next_of_kin }}</p>
+        <p><strong>Next of Kin Address:</strong> {{ application.next_of_kin_address }}</p>
+        <p><strong>Next of Kin Phone:</strong> {{ application.next_of_kin_phone }}</p>
+        <p><strong>Name of Chief:</strong> {{ application.chief_name }}</p>
+        <p><strong>Chief Address:</strong> {{ application.chief_address }}</p>
+        <p><strong>Chief Phone:</strong> {{ application.chief_phone }}</p>
+        <p><strong>Living with Disability:</strong> {{ application.disability }}</p>
+        {% if application.disability_details %}
+            <p><strong>Disability Details:</strong> {{ application.disability_details }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Family Background -->
+    <div class="section">
+        <h3>Family Background</h3>
+        <p><strong>Parental Status:</strong> {{ application.parental_status }}</p>
+        {% if application.death_certificate %}
+            <p><a href="{{ application.death_certificate.url }}" class="btn btn-link" target="_blank">View Death Certificate</a></p>
+        {% endif %}
+        <p><strong>Father's Age:</strong> {{ application.father_age }}</p>
+        <p><strong>Father's Occupation:</strong> {{ application.father_occupation }}</p>
+        {% if application.father_health_status %}
+            <p><a href="{{ application.father_health_status.url }}" class="btn btn-link" target="_blank">Father's Health Evidence</a></p>
+        {% endif %}
+        <p><strong>Mother's Age:</strong> {{ application.mother_age }}</p>
+        <p><strong>Mother's Occupation:</strong> {{ application.mother_occupation }}</p>
+        {% if application.mother_health_status %}
+            <p><a href="{{ application.mother_health_status.url }}" class="btn btn-link" target="_blank">Mother's Health Evidence</a></p>
+        {% endif %}
+        <p><strong>Total Siblings:</strong> {{ application.total_siblings }}</p>
+    </div>
+
+    <!-- Other Information -->
+    <div class="section">
+        <h3>Other Information</h3>
+        <p><strong>Who Paid Your Secondary School Fees:</strong> {{ application.school_fee_payer }}</p>
+        {% if application.school_fee_evidence %}
+            <p><a href="{{ application.school_fee_evidence.url }}" class="btn btn-link" target="_blank">View Fee Payment Evidence</a></p>
+        {% endif %}
+        <p><strong>Receiving External Support:</strong> {{ application.external_support }}</p>
+        <p><strong>Fee Balance:</strong> {{ application.fee_balance }}</p>
+        {% if application.fee_statement %}
+            <p><a href="{{ application.fee_statement.url }}" class="btn btn-link" target="_blank">View Fee Statement</a></p>
+        {% endif %}
+    </div>
+
+    <!-- Action Buttons -->
+    <h3>Action</h3>
+    <form method="post" class="action-buttons">
+        {% csrf_token %}
+        <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+    </form>
+</div>
+{% endblock %}

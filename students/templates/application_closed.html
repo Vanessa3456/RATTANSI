@@ -1,0 +1,47 @@
+{%extends 'homepage.html'%}
+
+{%block content%}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #dc3545;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .home-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .home-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Applications are Closed</h1>
+        <p>{{ message|default:"The bursary application period is currently closed." }}</p>
+        <a href="{% url 'dashboard' %}" class="home-btn">Return to Dashboard</a>
+    </div>
+
+    {%endblock%}

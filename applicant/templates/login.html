@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}Applicant Login{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: url('{% static "images/busary.jpeg" %}') no-repeat center fixed;
+        background-size: cover;
+    }
+    .center-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 70px;
+    }
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+</style>
+
+<div class="center-container">
+    <div class="login-container">
+        <img src="{% static 'images/mmustlogo.png' %}" alt="Logo" class="img-fluid mb-3" style="max-width: 150px;">
+        <h2>Applicant Login</h2>
+
+        {% if messages %}
+            <div id="alert-container">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3 text-start">
+                <label for="reg_number" class="form-label">Registration Number</label>
+                <input type="text" class="form-control" id="reg_number" name="reg_number"
+                       placeholder="e.g., SIT/B/01-55559/2022"
+                       pattern="^[A-Z]{3}/[A-Z]/01-\d{5}/\d{4}$"
+                       title="Format: ABC/X/01-XXXXX/YYYY (e.g., SIT/B/01-55559/2022)."
+                       required>
+            </div>
+
+            <div class="mb-3 text-start">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Enter your password" required>
+                    <span class="input-group-text">
+                        <input type="checkbox" id="togglePassword"> Show
+                    </span>
+                </div>
+            </div>
+
+            <div class="text-center mb-3">
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <h4>Don't have an account?</h4>
+            <a href="{% url 'register' %}" class="btn btn-secondary w-100">Register</a>
+        </div>
+
+        <div class="text-center mt-3">
+            <h4>Admin?</h4>
+            <a href="{% url 'admin_login' %}" class="btn btn-primary w-100">Admin Login</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("togglePassword").addEventListener("change", function() {
+        let passwordField = document.getElementById("password");
+        passwordField.type = this.checked ? "text" : "password";
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+            let alertContainer = document.getElementById("alert-container");
+            if (alertContainer) {
+                alertContainer.style.transition = "opacity 1s";
+                alertContainer.style.opacity = "0";
+                setTimeout(() => alertContainer.remove(), 1000);
+            }
+        }, 3000);
+    });
+</script>
+
+{% endblock %}

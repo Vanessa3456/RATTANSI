@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin page</title>
+
+   <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/approved_apps.css">
+     <link rel="stylesheet" href="/static/css/review_app_dets.css">
+     <link rel="stylesheet" href="/static/css/dashboard.css">
+
+
+    <script defer src="/static/js/script.js"></script>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div class="left-section">
+            <img src="/static/images/logo.jpg" class="logo">
+            <h2>MASINDE MULIRO UNIVERSITY RATTANSI PORTAL</h2>
+        </div>
+        <div class="right-section">
+            <button class="logout-btn" onclick="window.location.href='{% url 'admin_login' %}'"> Logout</button>
+        </div>
+    </div>
+
+    <!-- Sidebar (Below the Top Nav) -->
+    <div class="sidebar" id="sidebar">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <ul>
+            <li><a href="{% url 'admin_dashboard' %}"><i class="icon"></i> <span>Dashboard</span></a></li>
+            <li><a href="{% url 'review_applications' %}"><i class="icon"></i> <span> Review Applications</span></a></li>
+            <li><a href="{% url 'approved_applications' %}"><i class="icon"></i> <span>Approved Applications</span></a></li>
+            <li><a href="{% url 'rejected_applications' %}"><i class="icon"></i> <span>Rejected Applications </span></a></li>
+            <li><a href="{% url 'allocate_funds' %}"><i class="icon"></i> <span>Fund Allocation</span></a></li>
+        </ul>
+    </div>
+
+
+    <div class="main-content">
+
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

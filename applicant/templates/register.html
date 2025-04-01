@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .bg-image {
+
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
+
+<div class="bg-image">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <div class="text-center">
+            <img src="{% static 'images/mmustlogo.png' %}" alt="Logo" class="img-fluid mb-3" width="100">
+            <h2 class="mb-4">Register New Applicant</h2>
+        </div>
+
+        <!-- Registration Form -->
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Bootstrap Alerts for Messages (Only Once After Title) -->
+            {% if messages %}
+            <div id="alert-container" class="mt-2">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label for="regNumber" class="form-label">Registration Number</label>
+                <input type="text" class="form-control" id="regNumber" placeholder="SIT/B/01-XXXXX/2022"
+                       name="reg_number" required pattern="SIT/B/01-\d{5}/\d{4}"
+                       title="Format: SIT/B/01-XXXXX/YYYY (e.g., SIT/B/01-55559/2022)">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="User-Email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="fullName" placeholder="Full Name" name="full_name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Create Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Create New Password" name="password1" required>
+                    <span class="input-group-text">
+                        <input type="checkbox" id="togglePassword"> Show
+                    </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="password2" required>
+                    <span class="input-group-text">
+                        <input type="checkbox" id="toggleConfirmPassword"> Show
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Auto-fade alert messages after 3 seconds
+        setTimeout(function () {
+            document.querySelectorAll(".alert").forEach(function(alert) {
+                alert.classList.add("fade-out");
+                setTimeout(() => alert.remove(), 500); // Remove after fade out
+            });
+        }, 3000);
+    });
+
+    // Show/Hide Password Functionality
+    document.getElementById("togglePassword").addEventListener("change", function() {
+        let passwordField = document.getElementById("password");
+        passwordField.type = this.checked ? "text" : "password";
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("change", function() {
+        let confirmPasswordField = document.getElementById("confirmPassword");
+        confirmPasswordField.type = this.checked ? "text" : "password";
+    });
+</script>
+
+{% endblock %}

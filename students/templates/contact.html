@@ -1,0 +1,34 @@
+{% extends 'homepage.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="contact-container">
+        <div class="contact-section">
+            <div class="contact-icon">
+                <img src="{% static 'images/address-icon.png' %}" alt="Address Icon">
+            </div>
+            <div class="contact-info">
+                <h4>Address</h4>
+                <p>P. O. BOX 190-50100, Kakamega<br>Kenya</p>
+            </div>
+        </div>
+        <div class="contact-section">
+            <div class="contact-icon">
+                <img src="{% static 'images/contact-icon.png' %}" alt="Contact Icon">
+            </div>
+            <div class="contact-info">
+                <h4>Contact Info</h4>
+                <p>Telephone Contacts: +254 (0) 702597360/1, 733120020/2<br>LandLine: +254 057 2505222/3</p>
+            </div>
+        </div>
+        <div class="contact-section">
+            <div class="contact-icon">
+                <img src="{% static 'images/email-icon.png' %}" alt="Email Icon">
+            </div>
+            <div class="contact-info">
+                <h4>Email</h4>
+                <p>Email us at: <a href="mailto:info@mmust.ac.ke">info@mmust.ac.ke</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

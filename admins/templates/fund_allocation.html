@@ -1,0 +1,47 @@
+{% extends 'admin_homepage.html' %}
+
+{% block content %}
+<h2>Fund Allocation</h2>
+
+<!-- Show Button Only If No Pending Applications -->
+{% if not pending_applications %}
+    <form method="post" action="{% url 'allocate_funds' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Allocate Funds</button>
+    </form>
+{% else %}
+    <p class="error">All applications must be reviewed before fund allocation.</p>
+{% endif %}
+
+<h3>Total Funds Allocated: KES {{ total_allocated }}</h3>
+<h3>Remaining Funds: KES {{ remaining_funds }}</h3>
+
+<a href="{% url 'export_fund_allocation_pdf' %}" class="btn btn-danger">Download PDF</a>
+
+<!-- Fund Allocation Table -->
+<table border="1">
+    <tr>
+        <th>Student Name</th>
+        <th>Registration Number</th>
+        <th>Parental Status</th>
+
+
+        <th>Allocated Amount</th>
+    </tr>
+    {% for app in approved_apps %}
+    <tr>
+        <td>{{ app.name }}</td>
+        <td>{{ app.reg_no }}</td>
+        <td>{{ app.parental_status }}</td>
+
+
+        <td>{{ app.approved_amount }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">No approved applications found.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

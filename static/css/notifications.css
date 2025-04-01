@@ -1,0 +1,67 @@
+/* notifications.css */
+
+/* General styling for the notifications container */
+.notifications-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.notifications-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Notifications List */
+.notifications-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Individual Notification Item */
+.notifications-container li {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-left: 5px solid #007bff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s;
+}
+
+/* Unread Notification - Different Background */
+.notifications-container li a {
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background: #007bff;
+    color: white;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.notifications-container li a:hover {
+    background: #0056b3;
+}
+
+/* Delete Button */
+.notifications-container li a:last-child {
+    background: red;
+}
+
+.notifications-container li a:last-child:hover {
+    background: darkred;
+}
+
+/* Empty Notifications */
+.notifications-container li.empty {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+}

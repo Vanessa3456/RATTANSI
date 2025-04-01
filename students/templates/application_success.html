@@ -1,0 +1,12 @@
+{% extends "homepage.html" %}
+
+{% block content %}
+    <div class="success-container">
+        <h2>Application Submitted Successfully!</h2>
+        <p>Thank you for submitting your application. We will review it and get back to you soon.</p>
+
+        <a href="{% url 'student_application' %}" class="btn">Go back</a>
+    </div>
+{% endblock %}
+
+-

@@ -1,0 +1,23 @@
+/* contact/static/css/contact.css */
+.contact-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.contact-section {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    width: 30%;
+}
+
+.contact-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.contact-info h3 {
+    margin-top: 10px;
+}
