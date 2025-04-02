@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'authentication',  # Name of your database in MySQL
         'USER': 'root',  # Replace with your MySQL username
-        'PASSWORD': 'root',  # Replace with your MySQL password
+        'PASSWORD': '',  # Replace with your MySQL password
         'HOST': 'localhost',  # Localhost (WAMP Server)
         'PORT': '3306',  # Default MySQL Port
         'OPTIONS': {
