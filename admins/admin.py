@@ -18,7 +18,6 @@ class FundAllocationSettingsAdmin(admin.ModelAdmin):
 
 
 
-
 @admin.register(StudentApplication)
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('student', 'status', 'university_siblings', 'secondary_siblings', 'approved_amount')

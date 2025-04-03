@@ -11,6 +11,7 @@ class StudentApplicationForm(forms.ModelForm):
     # Existing Fields
     school = forms.ChoiceField(choices=StudentApplication.SCHOOL_CHOICES, required=True)
     county = forms.ChoiceField(choices=StudentApplication.COUNTY_CHOICES, required=True)
+    residential_status=forms.ChoiceField(choices=StudentApplication.RESIDENTIAL_STATUS_CHOICES, required=True)
     parental_status = forms.ChoiceField(
         choices=PARENTAL_STATUS_CHOICES,
         widget=forms.RadioSelect,
