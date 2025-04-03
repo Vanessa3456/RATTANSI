@@ -73,7 +73,6 @@ class StudentApplicationForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"placeholder": "Enter your full name"}),
             "reg_no": forms.TextInput(attrs={"placeholder": "Enter your registration number"}),
-            "school": forms.TextInput(attrs={"placeholder": "Enter your school name"}),
             "gender": forms.Select(attrs={"placeholder": "Select your gender"}),
             "home_address": forms.TextInput(attrs={"placeholder": "Enter your home address"}),
             "phone_number": forms.TextInput(attrs={"placeholder": "Enter your phone number"}),

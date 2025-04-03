@@ -129,8 +129,6 @@
                 {{ form.student_status }}
             </div>
 
-
-
             <div class="form-group">
                 <label for="id_residential_status">Accommodation or Residential Status:</label>
                 {{ form.residential_status }}
@@ -349,7 +347,7 @@
 
     .progress-step {
         width: 80px;
-        height:80px;
+        height: 80px;
         background: #e0e0e0;
         border-radius: 50%;
         display: flex;
@@ -359,10 +357,10 @@
         z-index: 2;
         color: #666;
         font-weight: bold;
-        font-size:14px;
-        text-align:center;
-        padding:5px;
-        word_wrap:break-word
+        font-size: 14px;
+        text-align: center;
+        padding: 5px;
+        word-wrap: break-word;
     }
 
     .progress-step.active {
@@ -460,6 +458,28 @@
         background-color: #cccccc;
         cursor: not-allowed;
     }
+
+    /* Error styling */
+    .error-field {
+        border: 2px solid #d9534f !important;
+        background-color: #fff5f5;
+    }
+
+    .field-error {
+        color: #d9534f;
+        font-size: 0.85em;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+
+    .step-error {
+        background-color: #f2dede;
+        color: #a94442;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        border: 1px solid #ebccd1;
+    }
 </style>
 
 <script>
@@ -488,11 +508,78 @@ document.addEventListener("DOMContentLoaded", function() {
         currentStep = stepIndex;
     }
 
+    // Validate required fields in current step
+    function validateCurrentStep() {
+        const currentStepElement = steps[currentStep];
+        const requiredFields = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
+        let isValid = true;
+
+        // Reset previous error styling
+        currentStepElement.querySelectorAll('.field-error').forEach(el => el.remove());
+
+        requiredFields.forEach(field => {
+            // Remove any existing error styling
+            field.classList.remove('error-field');
+
+            // Check if field is empty
+            if (!field.value.trim()) {
+                isValid = false;
+
+                // Add error styling
+                field.classList.add('error-field');
+
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'field-error';
+                errorMsg.textContent = 'This field is required';
+
+                // Insert error after the field
+                field.parentNode.insertBefore(errorMsg, field.nextSibling);
+            }
+
+            // Special handling for radio buttons and checkboxes
+            if ((field.type === 'radio' || field.type === 'checkbox') &&
+                !currentStepElement.querySelector(`input[name="${field.name}"]:checked`)) {
+                isValid = false;
+
+                // Get the parent container for the radio group
+                const radioGroup = field.closest('.form-group');
+                if (radioGroup && !radioGroup.querySelector('.field-error')) {
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'field-error';
+                    errorMsg.textContent = 'Please select an option';
+                    radioGroup.appendChild(errorMsg);
+                }
+            }
+        });
+
+        return isValid;
+    }
+
     // Next button functionality
     document.querySelectorAll('.next-btn').forEach(button => {
         button.addEventListener('click', function() {
             if (currentStep < steps.length - 1) {
-                showStep(currentStep + 1);
+                if (validateCurrentStep()) {
+                    showStep(currentStep + 1);
+                } else {
+                    // Show general error message
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'step-error';
+                    errorMsg.textContent = 'Please fill in all required fields before proceeding.';
+
+                    // Remove any existing error message
+                    const existingError = steps[currentStep].querySelector('.step-error');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+
+                    // Insert at top of current step
+                    steps[currentStep].insertBefore(errorMsg, steps[currentStep].firstChild);
+
+                    // Scroll to the top of the form to show the error
+                    steps[currentStep].scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
     });
@@ -509,7 +596,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize first step
     showStep(0);
 
-    // Existing functionality
     // Declaration checkbox
     const declarationCheckbox = document.getElementById("declarationCheckbox");
     const submitBtn = document.getElementById("submitBtn");
@@ -518,11 +604,13 @@ document.addEventListener("DOMContentLoaded", function() {
         declarationCheckbox.addEventListener("change", function() {
             submitBtn.disabled = !this.checked;
         });
+        // Initialize button state
+        submitBtn.disabled = !declarationCheckbox.checked;
     }
 
     // Disability field toggle
     const disabilityCheckbox = document.getElementById("id_disability");
-    const disabilityDetails = document.getElementById("id_disability_status");
+    const disabilityDetails = document.getElementById("id_disability_details");
 
     if (disabilityCheckbox && disabilityDetails) {
         function toggleDisabilityField() {
@@ -546,11 +634,11 @@ document.addEventListener("DOMContentLoaded", function() {
         function toggleParentalFields() {
             const status = document.querySelector("input[name='parental_status']:checked")?.value;
 
-            if (status === "Total orphan") {
+            if (status === "orphan") {
                 deathCertField.style.display = "block";
                 fatherFields.style.display = "none";
                 motherFields.style.display = "none";
-            } else if (status === "Have one parent") {
+            } else if (status === "one") {
                 deathCertField.style.display = "block";
                 fatherFields.style.display = "block";
                 motherFields.style.display = "block";
@@ -574,13 +662,22 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!radios.length) return;
 
         function updateDependentFields() {
-            const isYes = document.querySelector(`input[name="${radioName}"]:checked`)?.value === "Y";
+            const isYes = document.querySelector(`input[name="${radioName}"]:checked`)?.value === "yes";
 
             dependentIds.forEach(id => {
                 const field = document.getElementById(id);
                 if (field) {
-                    field.disabled = !isYes;
-                    if (!isYes) field.value = "";
+                    field.style.display = isYes ? "block" : "none";
+
+                    // Find all form inputs within this field group
+                    const inputs = field.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        input.disabled = !isYes;
+                        input.required = isYes && input.hasAttribute('data-required-if-shown');
+                        if (!isYes && input.type !== 'checkbox' && input.type !== 'radio') {
+                            input.value = "";
+                        }
+                    });
                 }
             });
         }
@@ -592,10 +689,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Set up all conditional fields
-    setupConditionalField("ever_been_in_work_study", ["id_work_study_evidence"]);
-    setupConditionalField("financial_support_External", ["id_sponsor_source", "id_financial_support_amount"]);
-    setupConditionalField("completed_tuition_fees", ["id_fees_balance", "id_fee_statement"]);
-    setupConditionalField("deferred_studies", ["id_deferred_reason"]);
+    setupConditionalField("work_study", ["work-study-evidence-group"]);
+    setupConditionalField("external_support", ["sponsor-source-group", "sponsor-amount-group"]);
+    setupConditionalField("tuition_fee_paid", ["fee-balance-group", "fee-statement-group"]);
+    setupConditionalField("deferred_study", ["defer-reason-group"]);
 
     // Message timeouts
     setTimeout(() => {
