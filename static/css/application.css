@@ -105,16 +105,6 @@ textarea {
     border-radius: 4px;
 }
 
-.checkbox-container {
-    display: flex;
-    align-items: center;
-}
-
-.checkbox-container input[type="checkbox"] {
-    width: auto;
-    margin-right: 10px;
-}
-
 .messages {
     padding: 15px;
     margin-bottom: 20px;
@@ -226,4 +216,10 @@ textarea {
     display: block;
     margin: 0 auto 10px auto;
     max-width: 120px;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* space between label and checkbox */
+    margin-top: 15px;
 }
