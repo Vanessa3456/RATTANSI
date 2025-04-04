@@ -1,437 +1,508 @@
 {% extends "homepage.html" %}
 {% block content %}
-
-<form method="POST" id="personalDetailsForm" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div class="form-section">
-        <h2>MASINDE MULIRO UNIVERSITY OF SCIENCE AND TECHNOLOGY</h2>
-        <h3>STUDENT AFFAIRS DEPARTMENT</h3>
-        <h3>RATTANSI BURSARY APPLICATION FORM</h3>
-        <h3>2024/2025 ACADEMIC YEAR</h3>
-
-        <p class="instructions">
-            <strong>INSTRUCTIONS:</strong><br>
-            This form has 3 sections. Complete all the sections. This is an official document, and the information provided must be
-            true and correct to the best of your knowledge. Giving false, incorrect, or incomplete information will lead to the
-            automatic disqualification of the application and may further lead to disciplinary action or forfeiture of the bursary.
-        </p>
-
-        <!-- Display Django Messages -->
-        {% if messages %}
-            <div id="flash-messages" class="messages">
-                {% for message in messages %}
-                    <p class="message {% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <!-- Display Form Errors -->
-        {% if form.errors %}
-            <div id="error-box" class="error-box">
-                <ul>
-                    {% for field, errors in form.errors.items %}
-                        {% for error in errors %}
-                            <li><strong>{{ field|title }}</strong>: {{ error }}</li>
-                        {% endfor %}
+{% load static %}
+<div class="container">
+     <img src="{% static 'images/mmustlogo.png' %}" alt="Logo" class="logo-center img-fluid">
+    <h2>STUDENT AFFAIRS DEPARTMENT</h2>
+    <h2>RATTANSI BURSARY APPLICATION FORM</h2>
+    <h2>2024/2025 ACADEMIC YEAR</h2>
+    <div class="instructions-box">
+    <strong>INSTRUCTIONS:</strong>
+    <p>
+        This form has 3 sections. Complete all the sections. This is an official document, and the information provided must be
+        true and correct to the best of your knowledge. Giving false, incorrect, or incomplete information will lead to the
+        automatic disqualification of the application and may further lead to disciplinary action or forfeiture of the bursary.
+    </p>
+  </div><br>
+    <div class="progress-container">
+        <div class="progress-step active" data-step="1">Personal Details</div>
+        <div class="progress-step" data-step="2">Family Background</div>
+        <div class="progress-step" data-step="3">Other Information</div>
+        <div class="progress-step" data-step="4">Declaration</div>
+    </div>
+    {% if messages %}
+        <div id="flash-messages" class="messages">
+            {% for message in messages %}
+                <p class="message {% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if form.errors %}
+        <div id="error-box" class="error-box">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li><strong>{{ field|title }}</strong>: {{ error }}</li>
                     {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-
-        <h2>1. PERSONAL DETAILS OF THE APPLICANT</h2>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_name">a. Name:</label>
-                {{ form.name }}
-            </div>
-            <div class="form-group">
-                <label for="id_reg_no">b. Registration Number:</label>
-                {{ form.reg_no }}
-            </div>
-            <div class="form-group">
-                <label for="id_school">c. School:</label>
-                {{ form.school }}
-            </div>
+                {% endfor %}
+            </ul>
         </div>
+    {% endif %}
+    <form method="POST" id="personalDetailsForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-step active" id="step-1">
+            <h2 class="section-heading">1. PERSONAL DETAILS OF THE APPLICANT</h2>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_gender">d. Gender:</label>
-                {{ form.gender }}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_name">Name:</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_reg_no">Registration Number:</label>
+                    {{ form.reg_no }}
+                </div>
             </div>
-            <div class="form-group">
-                <label for="id_home_address">e. Home Address:</label>
-                {{ form.home_address }}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_school">School:</label>
+                    {{ form.school }}
+                </div>
+                <div class="form-group">
+                    <label for="id_gender">Gender:</label>
+                    {{ form.gender }}
+                </div>
             </div>
-            <div class="form-group">
-                <label for="id_phone_number">f. Phone Number:</label>
-                {{ form.phone_number }}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_home_address">Home Address:</label>
+                    {{ form.home_address }}
+                </div>
+                <div class="form-group">
+                    <label for="id_phone_number">Phone Number:</label>
+                    {{ form.phone_number }}
+                </div>
             </div>
+            <div class="form-row">
+                 <div class="form-group">
+                    <label for="county">Home County:</label>
+                    {{ form.county }}
+                </div>
+               <div class="form-group">
+                    <label for="id_next_of_kin">Name of Next of Kin:</label>
+                    {{ form.next_of_kin }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_next_of_kin_address">Next of Kin Address:</label>
+                    {{ form.next_of_kin_address }}
+                </div>
+                <div class="form-group">
+                    <label for="id_next_of_kin_phone">Next of Kin Phone:</label>
+                    {{ form.next_of_kin_phone }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_chief_name">Name of Chief:</label>
+                    {{ form.chief_name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_chief_address">Chief Address:</label>
+                    {{ form.chief_address }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_chief_phone">Chief Phone Number:</label>
+                    {{ form.chief_phone }}
+                </div>
+                <div class="form-group checkbox-container">
+                    <label for="id_disability">Are you living with a disability?</label>
+                    {{ form.disability }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" id="disability-details-group">
+                    <label for="id_disability_details">If yes, specify:</label>
+                    {{ form.disability_details }}
+                </div>
+                <div class="form-group">
+                    <label for="id_student_status">Student Status:</label>
+                    {{ form.student_status }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_residential_status">Accommodation or Residential Status:</label>
+                    {{ form.residential_status }}
+                </div>
+            </div>
+           <div class="form-navigation">
+    <button type="button" class="nav-btn next-btn">Next →</button>
+           </div>
+
         </div>
+        <div class="form-step" id="step-2">
+            <h2 class="section-heading">2. FAMILY BACKGROUND</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Parental Status (Tick as appropriate)</label>
+                    {{ form.parental_status }}
+                </div>
+                <div class="form-group" id="death_certificate_field" style="display: none;">
+                    <label>Attach Death Certificate (if deceased):</label>
+                    {{ form.death_certificate }}
+                </div>
+            </div>
+            <div id="father_fields">
+                <h3>Father</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age:</label>
+                        {{ form.father_age }}
+                    </div>
+                    <div class="form-group">
+                        <label>Occupation:</label>
+                        {{ form.father_occupation }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Current Employer:</label>
+                        {{ form.father_employer }}
+                    </div>
+                    <div class="form-group">
+                        <label>Health Status (Attach evidence):</label>
+                        {{ form.father_health_status }}
+                    </div>
+                </div>
+            </div>
+            <div id="mother_fields">
+                <h3>Mother</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Age:</label>
+                        {{ form.mother_age }}
+                    </div>
+                    <div class="form-group">
+                        <label>Occupation:</label>
+                        {{ form.mother_occupation }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Current Employer:</label>
+                        {{ form.mother_employer }}
+                    </div>
+                    <div class="form-group">
+                        <label>Health Status (Attach evidence):</label>
+                        {{ form.mother_health_status }}
+                    </div>
+                </div>
+            </div>
+            <h3>Siblings (Brothers and Sisters)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Total number of siblings (Excluding yourself):</label>
+                    {{ form.total_siblings }}
+                </div>
+                <div class="form-group">
+                    <label>Number in University/College:</label>
+                    {{ form.university_siblings }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Number in Secondary:</label>
+                    {{ form.secondary_siblings }}
+                </div>
+                <div class="form-group">
+                    <label>How many are out of school?</label>
+                    {{ form.out_of_school_siblings }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Why?</label>
+                    {{ form.out_of_school_reason }}
+                </div>
+                 <div class="form-group">
+                    <label>Any who are working and their occupations:</label>
+                    {{ form.working_siblings_occupation }}
+                </div>
+            </div>
+            <div class="form-navigation">
+    <button type="button" class="nav-btn prev-btn">← Previous</button>
+    <button type="button" class="nav-btn next-btn">Next →</button>
+</div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_county">g. Home County:</label>
-                {{ form.county }}
-            </div>
-            <div class="form-group">
-                <label for="id_next_of_kin">h. Name of Next of Kin:</label>
-                {{ form.next_of_kin }}
-            </div>
-            <div class="form-group">
-                <label for="id_next_of_kin_address">i. Next of Kin Address:</label>
-                {{ form.next_of_kin_address }}
-            </div>
         </div>
+        <div class="form-step" id="step-3">
+            <h2 class="section-heading">3. OTHER INFORMATION</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Who paid your secondary school fees?</label>
+                    {{ form.school_fee_payer }}
+                </div>
+                <div class="form-group">
+                    <label>Attach evidence:</label>
+                    {{ form.school_fee_evidence }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Are you / have you been on work study program?</label>
+                    {{ form.work_study }}
+                </div>
+                <div class="form-group" id="work-study-evidence-group">
+                    <label>Attach evidence of work study:</label>
+                    {{ form.work_study_evidence }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Do you receive any financial support from external sponsors such as HELB, NGOs, CDF?</label>
+                    {{ form.external_support }}
+                </div>
+                <div class="form-group" id="sponsor-source-group">
+                    <label>If Yes, select sponsor:</label>
+                    {{ form.sponsor_source }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" id="sponsor-amount-group">
+                    <label>Amount received:</label>
+                    {{ form.sponsor_amount }}
+                </div>
+                <div class="form-group">
+                    <label>Have you completed paying tuition fees?</label>
+                    {{ form.tuition_fee_paid }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group" id="fee-balance-group">
+                    <label>If No, state balance:</label>
+                    {{ form.fee_balance }}
+                </div>
+                <div class="form-group" id="fee-statement-group">
+                    <label>Attach Current Fee Statement:</label>
+                    {{ form.fee_statement }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Have you ever deferred your university studies?</label>
+                    {{ form.deferred_study }}
+                </div>
+                <div class="form-group" id="defer-reason-group">
+                    <label>If Yes, give reason:</label>
+                    {{ form.defer_reason }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Any additional information:</label>
+                    {{ form.additional_info }}
+                </div>
+                <div class="form-group">
+                    <label>Attach evidence of any additional information:</label>
+                    {{ form.additional_info_evidence }}
+                </div>
+            </div>
+            <div class="form-navigation">
+    <button type="button" class="nav-btn prev-btn">← Previous</button>
+    <button type="button" class="nav-btn next-btn">Next →</button>
+</div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_next_of_kin_phone">j. Next of Kin Phone:</label>
-                {{ form.next_of_kin_phone }}
-            </div>
-            <div class="form-group">
-                <label for="id_chief_name">k. Name of Chief:</label>
-                {{ form.chief_name }}
-            </div>
-            <div class="form-group">
-                <label for="id_chief_address">l. Chief Address:</label>
-                {{ form.chief_address }}
-            </div>
         </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_chief_phone">m. Chief Phone:</label>
-                {{ form.chief_phone }}
-            </div>
+        <div class="form-step" id="step-4">
+            <h2 class="section-heading">4. DECLARATION BY THE APPLICANT</h2>
+            <p><strong>Note:</strong> The Committee may verify this information without necessarily contacting you.</p>
+            <p>I declare that the information given above is true to the best of my knowledge.</p>
             <div class="form-group checkbox-container">
-                <label for="id_disability">n. Are you living with a disability?</label>
-                {{ form.disability }}
+                <label>
+                    <input type="checkbox" id="declarationCheckbox" required>
+                    I agree to the declaration statement
+                </label>
             </div>
-            <div class="form-group">
-                <label for="id_disability_details">o. Specify:</label>
-                {{ form.disability_details }}
-            </div>
+            <div class="form-navigation">
+    <button type="button" class="nav-btn prev-btn">← Previous</button>
+    <button type="submit" id="submitBtn" class="nav-btn submit-btn">Submit Application</button>
+</div>
+
         </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="id_student_status">p. Student Status:</label>
-                {{ form.student_status }}
-            </div>
-            <div class="form-group">
-                <label for="id_residential_status">q. Accommodation or Residential Status:</label>
-                {{ form.residential_status }}
-            </div>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <h2>2. FAMILY BACKGROUND</h2>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label > a. Parental Status (Tick as appropriate)</label>
-                {{ form.parental_status }}
-            </div>
-            <div class="form-group" id="death_certificate_field" style="display: none;">
-                <label>Attach Death Certificate (if deceased):</label>
-                {{ form.death_certificate }}
-            </div>
-        </div>
-        <h4>b. Father</h4>
-        <div class="form-row">
-            <div class="form-group">
-                <label>i. Age:</label>
-                {{ form.father_age }}
-            </div>
-            <div class="form-group">
-                <label>ii. Occupation:</label>
-                {{ form.father_occupation }}
-            </div>
-            <div class="form-group">
-                <label>iii. Current Employer:</label>
-                {{ form.father_employer }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>iv. Health Status (Attach evidence):</label>
-                {{ form.father_health_status }}
-            </div>
-        </div>
-        <h4>c. Mother</h4>
-        <div class="form-row">
-            <div class="form-group">
-                <label>i. Age:</label>
-                {{ form.mother_age }}
-            </div>
-            <div class="form-group">
-                <label>ii. Occupation:</label>
-                {{ form.mother_occupation }}
-            </div>
-            <div class="form-group">
-                <label>iii. Current Employer:</label>
-                {{ form.mother_employer }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>iv. Health Status (Attach evidence):</label>
-                {{ form.mother_health_status }}
-            </div>
-        </div>
-
-        <h4>d. Siblings (Brothers and Sisters)</h4>
-        <div class="form-row">
-            <div class="form-group">
-                <label>i. Total number of siblings (Excluding yourself):</label>
-                {{ form.total_siblings }}
-            </div>
-            <div class="form-group">
-                <label>ii. Number in University/College:</label>
-                {{ form.university_siblings }}
-            </div>
-            <div class="form-group">
-                <label>iii. Number in Secondary:</label>
-                {{ form.secondary_siblings }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>iv. How many are out of school?</label>
-                {{ form.out_of_school_siblings }}
-            </div>
-            <div class="form-group">
-                <label>v. Why?</label>
-                {{ form.out_of_school_reason }}
-            </div>
-            <div class="form-group">
-                <label>vi. Any who are working and their occupations:</label>
-                {{ form.working_siblings_occupation }}
-            </div>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <h2>3. OTHER INFORMATION</h2>
-        <div class="form-row">
-            <div class="form-group">
-                <label>a. Who paid your secondary school fees?</label>
-                {{ form.school_fee_payer }}
-                {{ form.school_fee_evidence }}
-            </div>
-            <div class="form-group">
-                <label>b. Are you / have you been on work study program?</label>
-                {{ form.work_study }}
-                {{ form.work_study_evidence }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>d. Do you receive any financial support from external sponsors such as HELB, NGOs, CDF?</label>
-                {{ form.external_support }}
-            </div>
-            <div class="form-group">
-                <label>e. If Yes, select sponsor:</label>
-                {{ form.sponsor_source }}
-            </div>
-            <div class="form-group">
-                <label>f. Amount received:</label>
-                {{ form.sponsor_amount }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>g. Have you completed paying tuition fees?</label>
-                {{ form.tuition_fee_paid }}
-            </div>
-            <div class="form-group">
-                <label>h. If No, state balance:</label>
-                {{ form.fee_balance }}
-            </div>
-            <div class="form-group">
-                <label>j. Attach Current Fee Statement:</label>
-                {{ form.fee_statement }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>k. Have you ever deferred your university studies?</label>
-                {{ form.deferred_study }}
-            </div>
-            <div class="form-group">
-                <label>l. If Yes, give reason:</label>
-                {{ form.defer_reason }}
-            </div>
-            <div class="form-group">
-                <label>m. Any additional information:</label>
-                {{ form.additional_info }}
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label>n. Attach evidence:</label>
-                {{ form.additional_info_evidence }}
-            </div>
-        </div>
-    </div>
-
-    <div class="form-section">
-        <h3>4. DECLARATION BY THE APPLICANT</h3>
-        <p><strong>Note:</strong> The Committee may verify this information without necessarily contacting you.</p>
-
-        <p>
-            I declare that the information given above is true to the best of my knowledge.
-        </p>
-
-        <!-- Checkbox for declaration -->
-        <label>I agree to the declaration statement <input type="checkbox" id="declarationCheckbox">
-        </label>
-
-        <br><br>
-
-        <button type="submit" id="submitBtn" disabled>Submit Application</button>
-    </div>
-</form>
-
-<script>
-    // JavaScript for form functionality
-    const declarationCheckbox = document.getElementById("declarationCheckbox");
-    const submitBtn = document.getElementById("submitBtn");
-
-    // Enable/disable submit button based on declaration checkbox
-    declarationCheckbox.addEventListener("change", function () {
-        submitBtn.disabled = !this.checked;
-    });
-
-    // Disability checkbox logic
-    document.addEventListener("DOMContentLoaded", function () {
-        let disabilityCheckbox = document.getElementById("id_disability");
-        let specifyField = document.getElementById("id_disability_details");
-
-        function toggleSpecifyField() {
-            if (disabilityCheckbox.checked) {
-                specifyField.disabled = false;
-                specifyField.required = true;
+    </form>
+</div><script>document.addEventListener("DOMContentLoaded", function() {
+    // Step navigation
+    const steps = document.querySelectorAll('.form-step');
+    const progressSteps = document.querySelectorAll('.progress-step');
+    let currentStep = 0;
+    function showStep(stepIndex) {
+        // Hide all steps
+        steps.forEach(step => step.classList.remove('active'));
+        // Show current step
+        steps[stepIndex].classList.add('active');
+        // Update progress indicator
+        progressSteps.forEach((step, index) => {
+            if (index <= stepIndex) {
+                step.classList.add('active');
             } else {
-                specifyField.disabled = true;
-                specifyField.required = false;
-                specifyField.value = "";
+                step.classList.remove('active');
             }
-        }
-
-        toggleSpecifyField();
-        disabilityCheckbox.addEventListener("change", toggleSpecifyField);
-    });
-
-    // Parental status logic
-    document.addEventListener("DOMContentLoaded", function () {
-        const parentalStatus = document.querySelectorAll("input[name='parental_status']");
-        const deathCertificateField = document.getElementById("death_certificate_field");
-        const fatherFields = document.getElementById("father_fields");
-        const motherFields = document.getElementById("mother_fields");
-
-        function toggleFields() {
-            let selectedValue = document.querySelector("input[name='parental_status']:checked").value;
-            if (selectedValue === "orphan") {
-                deathCertificateField.style.display = "block";
-                fatherFields.style.display = "none";
-                motherFields.style.display = "none";
-            } else if (selectedValue === "one") {
-                deathCertificateField.style.display = "block";
-                fatherFields.style.display = "block";
-                motherFields.style.display = "block";
-            } else {
-                deathCertificateField.style.display = "none";
-                fatherFields.style.display = "block";
-                motherFields.style.display = "block";
-            }
-        }
-
-        parentalStatus.forEach(input => {
-            input.addEventListener("change", toggleFields);
         });
-
-        toggleFields();
-    });
-
-    // Other field toggling logic
-    document.addEventListener("DOMContentLoaded", function () {
-        const workStudyEvidence = document.getElementById("id_work_study_evidence");
-        const externalSupportField = document.getElementById("id_external_support");
-        const sponsorSourceField = document.getElementById("id_sponsor_source");
-        const sponsorAmountField = document.getElementById("id_sponsor_amount");
-        const tuitionFeeField = document.getElementById("id_tuition_fee_paid");
-        const feeBalanceField = document.getElementById("id_fee_balance");
-        const feeStatementField = document.getElementById("id_fee_statement");
-        const deferredStudyField = document.getElementById("id_deferred_study");
-        const deferReasonField = document.getElementById("id_defer_reason");
-        const schoolFeeEvidenceField = document.getElementById("id_school_fee_evidence");
-
-        function getRadioValue(name) {
-            const checkedRadio = document.querySelector(`input[name="${name}"]:checked`);
-            return checkedRadio ? checkedRadio.value : null;
-        }
-
-        function toggleField(field, isEnabled) {
-            if (field) {
-                field.disabled = !isEnabled;
-                if (!isEnabled) {
-                    field.value = "";
+        currentStep = stepIndex;
+    }
+    // Validate required fields in current step
+    function validateCurrentStep() {
+        const currentStepElement = steps[currentStep];
+        const requiredFields = currentStepElement.querySelectorAll('input[required], select[required], textarea[required]');
+        let isValid = true;
+        // Reset previous error styling
+        currentStepElement.querySelectorAll('.field-error').forEach(el => el.remove());
+        requiredFields.forEach(field => {
+            // Remove any existing error styling
+            field.classList.remove('error-field');
+            // Check if field is empty
+            if (!field.value.trim()) {
+                isValid = false;
+                // Add error styling
+                field.classList.add('error-field');
+                // Add error message
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'field-error';
+                errorMsg.textContent = 'This field is required';
+                // Insert error after the field
+                field.parentNode.insertBefore(errorMsg, field.nextSibling);
+            }
+            // Special handling for radio buttons and checkboxes
+            if ((field.type === 'radio' || field.type === 'checkbox') &&
+                !currentStepElement.querySelector(`input[name="${field.name}"]:checked`)) {
+                isValid = false;
+                // Get the parent container for the radio group
+                const radioGroup = field.closest('.form-group');
+                if (radioGroup && !radioGroup.querySelector('.field-error')) {
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'field-error';
+                    errorMsg.textContent = 'Please select an option';
+                    radioGroup.appendChild(errorMsg);
                 }
             }
-        }
-
-        function updateFields() {
-            const isWorkStudyYes = getRadioValue("work_study") === "yes";
-            toggleField(workStudyEvidence, isWorkStudyYes);
-
-            const isExternalSupportYes = getRadioValue("external_support") === "yes";
-            toggleField(sponsorSourceField, isExternalSupportYes);
-            toggleField(sponsorAmountField, isExternalSupportYes);
-
-            const isFeeNotPaid = getRadioValue("tuition_fee_paid") === "no";
-            toggleField(feeBalanceField, isFeeNotPaid);
-            toggleField(feeStatementField, isFeeNotPaid);
-
-            const isDeferred = getRadioValue("deferred_study") === "yes";
-            toggleField(deferReasonField, isDeferred);
-
-            schoolFeeEvidenceField.disabled = false;
-        }
-
-        updateFields();
-
-        document.querySelectorAll('input[name="work_study"]').forEach(radio => radio.addEventListener("change", updateFields));
-        document.querySelectorAll('input[name="external_support"]').forEach(radio => radio.addEventListener("change", updateFields));
-        document.querySelectorAll('input[name="tuition_fee_paid"]').forEach(radio => radio.addEventListener("change", updateFields));
-        document.querySelectorAll('input[name="deferred_study"]').forEach(radio => radio.addEventListener("change", updateFields));
-    });
-
-    // Hide flash messages and error box after 5 seconds
-    document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function () {
-            let flashMessages = document.getElementById("flash-messages");
-            let errorBox = document.getElementById("error-box");
-
-            if (flashMessages) {
-                flashMessages.style.display = "none";
+        });
+        return isValid;
+    }
+    // Next button functionality
+    document.querySelectorAll('.next-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            if (currentStep < steps.length - 1) {
+                if (validateCurrentStep()) {
+                    showStep(currentStep + 1);
+                } else {
+                    // Show general error message
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'step-error';
+                    errorMsg.textContent = 'Please fill in all required fields before proceeding.';
+                    // Remove any existing error message
+                    const existingError = steps[currentStep].querySelector('.step-error');
+                    if (existingError) {
+                        existingError.remove();
+                    }
+                    // Insert at top of current step
+                    steps[currentStep].insertBefore(errorMsg, steps[currentStep].firstChild);
+                    // Scroll to the top of the form to show the error
+                    steps[currentStep].scrollIntoView({ behavior: 'smooth' });
+                }
             }
-            if (errorBox) {
-                errorBox.style.display = "none";
-            }
-        }, 5000);
+        });
     });
-</script>
-
-{% endblock %}
+    // Previous button functionality
+    document.querySelectorAll('.prev-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            if (currentStep > 0) {
+                showStep(currentStep - 1);
+            }
+        });
+    });
+    // Initialize first step
+    showStep(0);
+    // Declaration checkbox
+    const declarationCheckbox = document.getElementById("declarationCheckbox");
+    const submitBtn = document.getElementById("submitBtn");
+    if (declarationCheckbox && submitBtn) {
+        declarationCheckbox.addEventListener("change", function() {
+            submitBtn.disabled = !this.checked;
+        });
+        // Initialize button state
+        submitBtn.disabled = !declarationCheckbox.checked;
+    }
+    // Disability field toggle
+    const disabilityCheckbox = document.getElementById("id_disability");
+    const disabilityDetails = document.getElementById("id_disability_details");
+    if (disabilityCheckbox && disabilityDetails) {
+        function toggleDisabilityField() {
+            const isDisabled = disabilityCheckbox.checked;
+            disabilityDetails.disabled = !isDisabled;
+            disabilityDetails.required = isDisabled;
+            if (!isDisabled) disabilityDetails.value = "";
+        }
+        disabilityCheckbox.addEventListener("change", toggleDisabilityField);
+        toggleDisabilityField();
+    }
+    // Parental status fields
+    const parentalStatusRadios = document.querySelectorAll("input[name='parental_status']");
+    const deathCertField = document.getElementById("death_certificate_field");
+    const fatherFields = document.getElementById("father_fields");
+    const motherFields = document.getElementById("mother_fields");
+    if (parentalStatusRadios.length) {
+        function toggleParentalFields() {
+            const status = document.querySelector("input[name='parental_status']:checked")?.value;
+            if (status === "orphan") {
+                deathCertField.style.display = "block";
+                fatherFields.style.display = "none";
+                motherFields.style.display = "none";
+            } else if (status === "one") {
+                deathCertField.style.display = "block";
+                fatherFields.style.display = "block";
+                motherFields.style.display = "block";
+            } else {
+                deathCertField.style.display = "none";
+                fatherFields.style.display = "block";
+                motherFields.style.display = "block";
+            }
+        }
+        parentalStatusRadios.forEach(radio => {
+            radio.addEventListener("change", toggleParentalFields);
+        });
+        toggleParentalFields(); // Initialize
+    }
+    // Conditional field dependencies
+    function setupConditionalField(radioName, dependentIds) {
+        const radios = document.querySelectorAll(`input[name="${radioName}"]`);
+        if (!radios.length) return;
+        function updateDependentFields() {
+            const isYes = document.querySelector(`input[name="${radioName}"]:checked`)?.value === "yes";
+            dependentIds.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.style.display = isYes ? "block" : "none";
+                    // Find all form inputs within this field group
+                    const inputs = field.querySelectorAll('input, select, textarea');
+                    inputs.forEach(input => {
+                        input.disabled = !isYes;
+                        input.required = isYes && input.hasAttribute('data-required-if-shown');
+                        if (!isYes && input.type !== 'checkbox' && input.type !== 'radio') {
+                            input.value = "";
+                        }
+                    });
+                }
+            });
+        }
+        radios.forEach(radio => {
+            radio.addEventListener("change", updateDependentFields);
+        });
+        updateDependentFields(); // Initialize
+    }
+    // Set up all conditional fields
+    setupConditionalField("work_study", ["work-study-evidence-group"]);
+    setupConditionalField("external_support", ["sponsor-source-group", "sponsor-amount-group"]);
+    setupConditionalField("tuition_fee_paid", ["fee-balance-group", "fee-statement-group"]);
+    setupConditionalField("deferred_study", ["defer-reason-group"]);
+    // Message timeouts
+    setTimeout(() => {
+        const flashMessages = document.getElementById("flash-messages");
+        const errorBox = document.getElementById("error-box");
+        if (flashMessages) flashMessages.style.display = "none";
+        if (errorBox) errorBox.style.display = "none";
+    }, 5000);
+});</script>{% endblock %}

@@ -1,90 +1,229 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f5f5f5;
-}
-.form-section {
-    background-color: white;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h2, h3 {
-    color: #fff; /* White text for headings */
-    margin: 0;
-    padding: 10px 15px;
-    background-color: #003366; /* Dark blue background */
-    border-radius: 5px;
-    display: inline-block;
-    font-size: 18px;
-}
-h2 {
-    margin-top: 20px;
-}
-.instructions {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-    text-align: justify;
-    background-color: #e9f5ff;
-    border: 1px solid #b3d3ff;
-    padding: 15px;
-    border-radius: 5px;
-}
-.form-row {
+
+/* Progress Indicator Styles */
+.progress-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    position: relative;
 }
-.form-group {
-    flex: 1;
-    min-width: 200px;
+
+.progress-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e0e0e0;
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.progress-step {
+    width: 80px;
+    height: 80px;
+    background: #e0e0e0;
+    border-radius: 50%;
     display: flex;
-    flex-direction: column;
-}
-label {
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    color: #666;
     font-weight: bold;
-    margin-bottom: 5px;
-    color: #333;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+    word-wrap: break-word;
 }
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
+
+.progress-step.active {
+    background: #1565C0;
+    color: white;
 }
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
+
+/* Form Steps */
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+}
+
+/* Form Navigation */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.nav-btn {
+    background-color: #007BFF; /* primary blue */
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
-button:hover {
-    background-color: #0056b3;
+
+.nav-btn:hover,
+.nav-btn:active {
+    background-color: #28a745; /* green on hover or active */
 }
+
+
+/* Existing styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="file"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 .checkbox-container {
     display: flex;
     align-items: center;
-    gap: 9px;
 }
+
 .checkbox-container input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    margin: 0;
+    width: auto;
+    margin-right: 10px;
 }
-a {
-    text-decoration: none;
-    color: #3cb371;
+
+.messages {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
 }
-a:hover {
-    text-decoration: underline;
+
+.messages.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.messages.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.error-box {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Error styling */
+.error-field {
+    border: 2px solid #d9534f !important;
+    background-color: #fff5f5;
+}
+
+.field-error {
+    color: #d9534f;
+    font-size: 0.85em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.step-error {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ebccd1;
+}
+
+/* NEW CSS for 2-column layout */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+    grid-gap: 15px; /* Adds spacing between columns */
+    margin-bottom: 15px;
+}
+
+/* Adjust for single-field rows if needed (e.g., full-width) */
+.form-row.full-width {
+    grid-template-columns: 1fr;
+}
+
+.form-row.full-width .form-group {
+    grid-column: 1 / -1; /* Span across all columns */
+}
+
+/* Small screens: revert to single column */
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+.instructions-box {
+    background-color: #d4edda; /* light green */
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #155724; /* darker green for text */
+}
+
+.instructions-box strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.section-heading {
+    background-color: #007BFF; /* Bootstrap blue */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.logo-center {
+    display: block;
+    margin: 0 auto 10px auto;
+    max-width: 120px;
 }
