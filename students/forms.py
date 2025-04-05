@@ -82,8 +82,8 @@ class StudentApplicationForm(forms.ModelForm):
             "chief_name": forms.TextInput(attrs={"placeholder": "Enter chief's name"}),
             "chief_address": forms.TextInput(attrs={"placeholder": "Enter chief's address"}),
             "chief_phone": forms.TextInput(attrs={"placeholder": "Enter chief's phone"}),
-            "father_kra":forms.TextInput(attr={"placeholder":"Enter your father's kra pin"}),
-            "mother_kra": forms.TextInput(attr={"placeholder": "Enter your mother's kra pin"}),
+            "father_kra":forms.TextInput(attrs={"placeholder":"Enter your father's kra pin"}),
+            "mother_kra": forms.TextInput(attrs={"placeholder": "Enter your mother's kra pin"}),
             "disability_details": forms.TextInput(attrs={"placeholder": "If yes, specify your disability"}),
         }
 

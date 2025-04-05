@@ -8,7 +8,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Notification
 from admins.models import ApplicationSettings
 
-
+# def salary_validation(request):
+    
 def help_view(request):
     return render(request, 'helpdesk.html')
 
@@ -72,3 +73,4 @@ def delete_notification(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id, student=request.user)
     notification.delete()
     return redirect('notifications')
+

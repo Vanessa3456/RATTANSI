@@ -162,9 +162,8 @@ class StudentApplication(models.Model):
         return f"{self.reg_no} - {self.academic_year} - {self.status}"
 
 class KraEmployee(models.Model):
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     kra_pin=models.CharField(max_length=11, unique=True)
-    name=models.CharField(max_length=100)
-    id_number=models.CharField(max_legth=20)
     salary=models.DecimalField(max_digits=10,decimal_places=2)
 
     def __str__(self):
