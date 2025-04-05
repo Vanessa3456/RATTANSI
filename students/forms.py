@@ -21,11 +21,13 @@ class StudentApplicationForm(forms.ModelForm):
     father_age = forms.IntegerField(widget=forms.NumberInput(attrs={"min": 0}), required=False)
     father_occupation = forms.CharField(max_length=100, required=False)
     father_employer = forms.ChoiceField(choices=StudentApplication.EMPLOYER_CHOICES, required=False)
+    father_kra = forms.CharField(max_length=255, required=False)
     father_health_status = forms.FileField(required=False)
 
     mother_age = forms.IntegerField(widget=forms.NumberInput(attrs={"min": 0}), required=False)
     mother_occupation = forms.CharField(max_length=100, required=False)
     mother_employer = forms.ChoiceField(choices=StudentApplication.EMPLOYER_CHOICES, required=False)
+    mother_kra = forms.CharField(max_length=255, required=False)
     mother_health_status = forms.FileField(required=False)
 
     total_siblings = forms.IntegerField(widget=forms.NumberInput(attrs={"min": 0}), required=True)

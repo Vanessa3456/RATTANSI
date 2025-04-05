@@ -89,12 +89,15 @@ class StudentApplication(models.Model):
     father_age = models.IntegerField(null=True, blank=True)
     father_occupation = models.CharField(max_length=100, null=True, blank=True)
     father_employer = models.CharField(max_length=100, choices=EMPLOYER_CHOICES)
+    father_kra=models.CharField(max_length=100)
     father_health_status = models.FileField(upload_to="documents/", null=True, blank=True)
+
 
     # Mother's Details
     mother_age = models.IntegerField(null=True, blank=True)
     mother_occupation = models.CharField(max_length=100, null=True, blank=True)
     mother_employer = models.CharField(max_length=100, choices=EMPLOYER_CHOICES)
+    mother_kra=models.CharField(max_length=100)
     mother_health_status = models.FileField(upload_to="documents/", null=True, blank=True)
 
     # Sibling Details
@@ -159,6 +162,15 @@ class StudentApplication(models.Model):
         return f"{self.reg_no} - {self.academic_year} - {self.status}"
 
 
+class ParentalIncomeRecord(models.Model):
+    reg_no = models.CharField(max_length=20, unique=True)
+    father_kra_pin = models.CharField(max_length=20, blank=True, null=True)
+    father_salary = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    mother_kra_pin = models.CharField(max_length=20, blank=True, null=True)
+    mother_salary = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.reg_no} - KRA Income"
 
 class Notification(models.Model):
 

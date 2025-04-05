@@ -5,7 +5,7 @@ from .forms import StudentApplicationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Notification
+from .models import Notification, ParentalIncomeRecord
 from admins.models import ApplicationSettings
 
 
@@ -36,7 +36,40 @@ def student_application(request):
 
     if request.method == "POST":
         form = StudentApplicationForm(request.POST, request.FILES)
+
+
         if form.is_valid():
+
+            reg_no = form.cleaned_data['reg_no']
+            father_kra_pin = form.cleaned_data.get('father_kra')
+            mother_kra_pin = form.cleaned_data.get('mother_kra')
+            try:
+                record = ParentalIncomeRecord.objects.get(reg_no=reg_no)
+                pin_match = False
+                high_income = False
+
+                if record.father_kra_pin == father_kra_pin:
+                    pin_match = True
+                    if record.father_salary and record.father_salary > 100000:
+                        high_income = True
+
+                if  record.mother_kra_pin == mother_kra_pin:
+                    pin_match = True
+                    if record.mother_salary and record.mother_salary > 100000:
+                        high_income = True
+
+                if not pin_match:
+                    messages.error(request, "The provided KRA PIN(s) do not match our records.")
+                    return render(request, "student_application.html", {"form": form})
+
+                if high_income:
+                    messages.error(request, "Your parent(s) income exceeds the allowed limit for bursary eligibility.")
+                    return render(request, "student_application.html", {"form": form})
+
+            except ParentalIncomeRecord.DoesNotExist:
+                messages.error(request, "No KRA record(s) found for your registration number.")
+                return render(request, "student_application.html", {"form": form})
+
             application = form.save(commit=False)
             application.academic_year = settings.academic_year  # Use current academic year
             application.student = request.user
