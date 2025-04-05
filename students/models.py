@@ -89,12 +89,15 @@ class StudentApplication(models.Model):
     father_age = models.IntegerField(null=True, blank=True)
     father_occupation = models.CharField(max_length=100, null=True, blank=True)
     father_employer = models.CharField(max_length=100, choices=EMPLOYER_CHOICES)
+    father_kra=models.CharField(max_length=100)
     father_health_status = models.FileField(upload_to="documents/", null=True, blank=True)
+
 
     # Mother's Details
     mother_age = models.IntegerField(null=True, blank=True)
     mother_occupation = models.CharField(max_length=100, null=True, blank=True)
     mother_employer = models.CharField(max_length=100, choices=EMPLOYER_CHOICES)
+    mother_kra=models.CharField(max_length=100)
     mother_health_status = models.FileField(upload_to="documents/", null=True, blank=True)
 
     # Sibling Details
@@ -158,7 +161,14 @@ class StudentApplication(models.Model):
     def __str__(self):
         return f"{self.reg_no} - {self.academic_year} - {self.status}"
 
+class KraEmployee(models.Model):
+    kra_pin=models.CharField(max_length=11, unique=True)
+    name=models.CharField(max_length=100)
+    id_number=models.CharField(max_legth=20)
+    salary=models.DecimalField(max_digits=10,decimal_places=2)
 
+    def __str__(self):
+        return f"{self.name}- {self.kra_pin}"
 
 class Notification(models.Model):
 
