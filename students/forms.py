@@ -70,7 +70,12 @@ class StudentApplicationForm(forms.ModelForm):
         fields = '__all__'
 
         widgets = {
-            "name": forms.TextInput(attrs={"placeholder": "Enter your full name"}),
+            "name": forms.TextInput(attrs={
+                "placeholder": "Enter your full name",
+                "pattern": "[A-Za-z']+",
+                "title": "Only alphabets and apostrophes are allowed",
+                "required": True
+            }),
             "reg_no": forms.TextInput(attrs={"placeholder": "Enter your registration number"}),
             "school": forms.TextInput(attrs={"placeholder": "Enter your school name"}),
             "gender": forms.Select(attrs={"placeholder": "Select your gender"}),
