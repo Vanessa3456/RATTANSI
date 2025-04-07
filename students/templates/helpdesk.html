@@ -1,9 +1,153 @@
 {% extends 'homepage.html' %}
-    {% load static %}
+{% load static %}
+
 {% block content %}
-    <h1>Help Video</h1>
-    <video width="640" height="360" controls>
-        <source src="{% static 'images/help.mp4' %}" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+
+<style>
+    .help-container {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .video-wrapper {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .title-box {
+        background-color: #007BFF;
+        padding: 12px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .title-box h1,
+    .title-box h2 {
+        margin: 10px 0;
+        color: white;
+    }
+
+    .guide-section {
+        margin-bottom: 25px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-section .section-heading {
+        background-color: #007BFF;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .guide-section ul {
+        padding-left: 20px;
+        list-style-type: disc;
+    }
+
+    hr {
+        margin: 40px 0;
+    }
+</style>
+
+<div class="help-container">
+
+    <!-- Rounded Header -->
+    <div class="title-box">
+        <h1>Help Video</h1>
+    </div>
+
+    <div class="video-wrapper">
+        <video width="640" height="360" controls>
+            <source src="{% static 'images/help.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <hr>
+
+    <!-- Rounded User Guide Title -->
+    <div class="title-box">
+        <h2>User Guide</h2>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">1. Applicant Login</div>
+        <p>
+            The first window is the <strong>Applicant Login</strong>.
+            If you don’t have an account, click the <strong>Register</strong> button to create one.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">2. Registration</div>
+        <p>
+            Fill in all the fields correctly. Use a valid email address because you will receive an
+            activation link via email. Click that link to activate your account before logging in.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">3. Login and Dashboard</div>
+        <p>
+            After activation, log in using your credentials. You will be redirected to the
+            <strong>Student Dashboard</strong>.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">4. Bursary Application</div>
+        <p>
+            To apply for the Rattansi Bursary, click on <strong>Application</strong> under your dashboard.
+            Make sure you read the <strong>Instructions</strong> carefully before proceeding.
+        </p>
+        <p>
+            The application form has 4 sections:
+            <ul>
+                <li><strong>Section 1:</strong> Personal Details</li>
+                <li><strong>Section 2:</strong> Family Background</li>
+                <li><strong>Section 3:</strong> Other Information</li>
+                <li><strong>Section 4:</strong> Declaration</li>
+            </ul>
+        </p>
+        <p>
+            Complete all fields, attach necessary documents, and click <strong>Submit Application</strong>.
+            You'll receive a confirmation message upon successful submission.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">5. Notifications</div>
+        <p>
+            Track your application status under the <strong>Notification</strong> section on the dashboard.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">6. Inquiries</div>
+        <p>
+            For any assistance, use the <strong>Contact Us</strong> section under the dashboard.
+        </p>
+    </div>
+
+    <div class="guide-section">
+        <div class="section-heading">7. Allocation</div>
+        <p>
+            Allocation will occur immediately after the application review and you won’t be able make <strong>Application</strong>.
+        </p>
+    </div>
+
+</div>
+
 {% endblock %}

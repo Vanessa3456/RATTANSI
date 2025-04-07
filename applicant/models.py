@@ -9,7 +9,7 @@ def validate_reg_number(value):
     pattern = r'^[A-Z]{3}/[A-Z]/01-\d{5}/\d{4}$'
     if not re.match(pattern, value):
         raise ValidationError(
-            "Registration number must be in the format: ABC/X/01-XXXXX/YYYY (e.g., SIT/B/01-55559/2022)."
+            "Registration number must be in the format: ABC/X/01-XXXXX/YYYY (e.g., SIT/B/01-00001/2000)."
         )
 
 
