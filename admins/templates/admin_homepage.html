@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin page</title>
 
-   <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/approved_apps.css">
-     <link rel="stylesheet" href="/static/css/review_app_dets.css">
-     <link rel="stylesheet" href="/static/css/dashboard.css">
-
+    <link rel="stylesheet" href="/static/css/review_app_dets.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/fund_allocation.css">
 
     <script defer src="/static/js/script.js"></script>
 </head>
@@ -29,17 +29,35 @@
     <div class="sidebar" id="sidebar">
         <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
         <ul>
-            <li><a href="{% url 'admin_dashboard' %}"><i class="icon"></i> <span>Dashboard</span></a></li>
-            <li><a href="{% url 'review_applications' %}"><i class="icon"></i> <span> Review Applications</span></a></li>
-            <li><a href="{% url 'approved_applications' %}"><i class="icon"></i> <span>Approved Applications</span></a></li>
-            <li><a href="{% url 'rejected_applications' %}"><i class="icon"></i> <span>Rejected Applications </span></a></li>
-            <li><a href="{% url 'allocate_funds' %}"><i class="icon"></i> <span>Fund Allocation</span></a></li>
+            <li>
+                <a href="{% url 'admin_dashboard' %}" class="{% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">
+                    <i class="icon"></i> <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'review_applications' %}" class="{% if request.resolver_match.url_name == 'review_applications' %}active{% endif %}">
+                    <i class="icon"></i> <span>Review Applications</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'approved_applications' %}" class="{% if request.resolver_match.url_name == 'approved_applications' %}active{% endif %}">
+                    <i class="icon"></i> <span>Approved Applications</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'rejected_applications' %}" class="{% if request.resolver_match.url_name == 'rejected_applications' %}active{% endif %}">
+                    <i class="icon"></i> <span>Rejected Applications</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'allocate_funds' %}" class="{% if request.resolver_match.url_name == 'allocate_funds' %}active{% endif %}">
+                    <i class="icon"></i> <span>Fund Allocation</span>
+                </a>
+            </li>
         </ul>
     </div>
 
-
     <div class="main-content">
-
         <div class="content">
             {% block content %} {% endblock %}
         </div>
