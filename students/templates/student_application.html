@@ -1,3 +1,4 @@
+
 {% extends "homepage.html" %}
 {% block content %}
 {% load static %}
@@ -49,9 +50,10 @@
                     {{ form.name }}
                 </div>
                 <div class="form-group">
-                    <label for="id_reg_no">Registration Number:</label>
-                    {{ form.reg_no }}
-                </div>
+    <label for="id_reg_no">Registration Number:</label>
+    {{ form.reg_no }}
+</div>
+
             </div>
             <div class="form-row">
                 <div class="form-group">
@@ -497,7 +499,51 @@
     // Set up all conditional fields
     setupConditionalField("work_study", ["work-study-evidence-group"]);
     setupConditionalField("external_support", ["sponsor-source-group", "sponsor-amount-group"]);
-    setupConditionalField("tuition_fee_paid", ["fee-balance-group", "fee-statement-group"]);
+// Find this line in your setupConditionalField function
+const isYes = document.querySelector(`input[name="${radioName}"]:checked`)?.value === "yes";
+
+// For the tuition_fee_paid field specifically, you need to modify the logic
+// Replace the setupConditionalField call for tuition_fee_paid with:
+const tuitionFeeRadios = document.querySelectorAll('input[name="tuition_fee_paid"]');
+if (tuitionFeeRadios.length) {
+    function updateFeeFields() {
+        // Note the logic is flipped here - we show fields when "no" is selected
+        const isNo = document.querySelector('input[name="tuition_fee_paid"]:checked')?.value === "no";
+        const feeBalanceGroup = document.getElementById("fee-balance-group");
+        const feeStatementGroup = document.getElementById("fee-statement-group");
+
+        if (feeBalanceGroup) {
+            feeBalanceGroup.style.display = isNo ? "block" : "none";
+            const inputs = feeBalanceGroup.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.disabled = !isNo;
+                input.required = isNo && input.hasAttribute('data-required-if-shown');
+                if (!isNo && input.type !== 'checkbox' && input.type !== 'radio') {
+                    input.value = "";
+                }
+            });
+        }
+
+        if (feeStatementGroup) {
+            feeStatementGroup.style.display = isNo ? "block" : "none";
+            const inputs = feeStatementGroup.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.disabled = !isNo;
+                input.required = isNo && input.hasAttribute('data-required-if-shown');
+                if (!isNo && input.type !== 'checkbox' && input.type !== 'radio') {
+                    input.value = "";
+                }
+            });
+        }
+    }
+
+    tuitionFeeRadios.forEach(radio => {
+        radio.addEventListener("change", updateFeeFields);
+    });
+
+    // Initialize fields
+    updateFeeFields();
+}
     setupConditionalField("deferred_study", ["defer-reason-group"]);
     // Message timeouts
     setTimeout(() => {
