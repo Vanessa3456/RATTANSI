@@ -20,19 +20,53 @@ class StudentApplication(models.Model):
     ]
 
     COUNTY_CHOICES = [
-        ('Nairobi', 'Nairobi'),
-        ('Mombasa', 'Mombasa'),
+        ('Baringo', 'Baringo'),
+        ('Bomet', 'Bomet'),
+        ('Bungoma', 'Bungoma'),
+        ('Busia', 'Busia'),
+        ('Elgeyo Marakwet', 'Elgeyo Marakwet'),
+        ('Embu', 'Embu'),
+        ('Garissa', 'Garissa'),
+        ('Homa Bay', 'Homa Bay'),
+        ('Isiolo', 'Isiolo'),
+        ('Kajiado', 'Kajiado'),
+        ('Kakamega', 'Kakamega'),
+        ('Kericho', 'Kericho'),
+        ('Kiambu', 'Kiambu'),
+        ('Kilifi', 'Kilifi'),
+        ('Kirinyaga', 'Kirinyaga'),
+        ('Kisii', 'Kisii'),
         ('Kisumu', 'Kisumu'),
         ('Kitui', 'Kitui'),
-        ('Kericho', 'Kericho'),
-        ('Nakuru', 'Nakuru'),
-        ('Kakamega', 'Kakamega'),
+        ('Kwale', 'Kwale'),
+        ('Laikipia', 'Laikipia'),
+        ('Lamu', 'Lamu'),
         ('Machakos', 'Machakos'),
         ('Makueni', 'Makueni'),
+        ('Mandera', 'Mandera'),
+        ('Marsabit', 'Marsabit'),
+        ('Meru', 'Meru'),
+        ('Migori', 'Migori'),
+        ('Mombasa', 'Mombasa'),
+        ('Murang\'a', 'Murang\'a'),
+        ('Nairobi', 'Nairobi'),
+        ('Nakuru', 'Nakuru'),
         ('Nandi', 'Nandi'),
-        ('Bomet', 'Bomet'),
         ('Narok', 'Narok'),
-        ('Bungoma', 'Bungoma'),
+        ('Nyamira', 'Nyamira'),
+        ('Nyandarua', 'Nyandarua'),
+        ('Nyeri', 'Nyeri'),
+        ('Samburu', 'Samburu'),
+        ('Siaya', 'Siaya'),
+        ('Taita Taveta', 'Taita Taveta'),
+        ('Tana River', 'Tana River'),
+        ('Tharaka Nithi', 'Tharaka Nithi'),
+        ('Trans Nzoia', 'Trans Nzoia'),
+        ('Turkana', 'Turkana'),
+        ('Uasin Gishu', 'Uasin Gishu'),
+        ('Vihiga', 'Vihiga'),
+        ('Wajir', 'Wajir'),
+        ('West Pokot', 'West Pokot'),
     ]
 
     SCHOOL_CHOICES=[
@@ -42,6 +76,11 @@ class StudentApplication(models.Model):
         ('SOM', 'SOM'),
         ('SEBE', 'SEBE'),
         ('SASS', 'SASS'),
+        ('SONAS', 'SONAS'),
+        ('SONMAPS', 'SONMAPS'),
+        ('SPB&T', 'SPB&T'),
+        ('SOBE', 'SOBE'),
+        ('SAVET', 'SAVET'),
     ]
 
     STATUS_CHOICES = [
@@ -158,10 +197,16 @@ class StudentApplication(models.Model):
     def __str__(self):
         return f"{self.reg_no} - {self.academic_year} - {self.status}"
 
+class feebalance(models.Model):
+    reg_no = models.CharField(max_length=20, unique=True)
+    total_fees=models.DecimalField(max_digits=10,decimal_places=2)
+    amount_paid=models.DecimalField(max_digits=10,decimal_places=2)
+    balance=models.DecimalField(max_digits=10,decimal_places=2)
 
+    def __str__(self):
+        return f"{self.student.name}'s Fee record"
 
 class Notification(models.Model):
-
     student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.TextField()  # Notification message
     is_read = models.BooleanField(default=False)  # Track if the notification is read
