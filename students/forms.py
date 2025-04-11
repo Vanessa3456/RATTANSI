@@ -1,5 +1,8 @@
 from django import forms
-from .models import StudentApplication
+from django.core.exceptions import ValidationError
+
+from .models import StudentApplication, feebalance
+
 
 class StudentApplicationForm(forms.ModelForm):
     PARENTAL_STATUS_CHOICES = [
@@ -36,13 +39,13 @@ class StudentApplicationForm(forms.ModelForm):
     working_siblings_occupation = forms.CharField(max_length=255, required=False)
 
 
-    # Choices
+
     YES_NO_CHOICES = [("yes", "Yes"), ("no", "No")]
     SPONSOR_CHOICES = [("HELB", "HELB"), ("NGO", "NGO"), ("CDF", "CDF"), ("Other", "Other")]
     DEFER_REASON_CHOICES = [("Medical", "Medical"), ("Social", "Social"), ("Financial", "Financial"),
                             ("Academic", "Academic")]
 
-    # Step 3 Fields
+
     school_fee_payer = forms.ChoiceField(choices=StudentApplication.SCHOO_FEES_CHOICES, required=False)
     school_fee_evidence = forms.FileField(required= False)
 
@@ -55,6 +58,10 @@ class StudentApplicationForm(forms.ModelForm):
 
     tuition_fee_paid = forms.ChoiceField(choices=YES_NO_CHOICES, widget=forms.RadioSelect)
     fee_balance = forms.IntegerField(required=False, widget=forms.NumberInput(attrs={"min": 0}))
+
+
+
+
     fee_statement = forms.FileField(required=False)
 
     deferred_study = forms.ChoiceField(choices=YES_NO_CHOICES, widget=forms.RadioSelect)
@@ -64,19 +71,54 @@ class StudentApplicationForm(forms.ModelForm):
         widget=forms.Textarea(attrs={"placeholder": "Enter any other relevant information"}), required=False)
     additional_info_evidence = forms.FileField(required=False)
 
+    # def __init__(self, *args, **kwargs):
+    #     self.user = kwargs.pop('user', None)
+    #     super().__init__(*args, **kwargs)
+
+    #     if self.user:
+    #         self.fields['reg_no'].initial=self.user.reg_number
+    #         self.fields['reg_no'].disabled = True
+    #
+    #     if self.user:
+    #         self.fields['name'].initial = self.user.full_name
+    #         self.fields['name'].disabled = True
+    #
+    # def save(self, commit = True):
+    #     instance=super().save(commit=False)
+    #     if self.user:
+    #         instance.reg_no = self.user.email
+    #     if commit:
+    #         instance.save()
+    #     return  instance
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # Catch the logged-in user passed from the view
+        super().__init__(*args, **kwargs)
+
+        if self.user:
+            # Assume CustomUser has reg_number and full_name
+            self.fields['reg_no'].initial = self.user.reg_number
+            self.fields['reg_no'].disabled = True
+
+            self.fields['name'].initial = self.user.full_name
+            self.fields['name'].disabled = True
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.user:
+            instance.reg_no = self.user.reg_number
+            instance.name = self.user.full_name
+            instance.student = self.user  # Link to the ForeignKey field
+        if commit:
+            instance.save()
+        return instance
 
     class Meta:
         model = StudentApplication
         fields = '__all__'
-
+        exclude = ['student', 'status', 'academic_year']
         widgets = {
-            "name": forms.TextInput(attrs={
-                "placeholder": "Enter your full name",
-                "pattern": "[A-Za-z']+",
-                "title": "Only alphabets and apostrophes are allowed",
-                "required": True
-            }),
-            "reg_no": forms.TextInput(attrs={"placeholder": "Enter your registration number"}),
+            "name": forms.TextInput(attrs={"readonly": "readonly"}),
+            "reg_no": forms.TextInput(attrs={"readonly": "readonly"}),
             "school": forms.TextInput(attrs={"placeholder": "Enter your school name"}),
             "gender": forms.Select(attrs={"placeholder": "Select your gender"}),
             "home_address": forms.TextInput(attrs={"placeholder": "Enter your home address"}),
@@ -89,5 +131,3 @@ class StudentApplicationForm(forms.ModelForm):
             "chief_phone": forms.TextInput(attrs={"placeholder": "Enter chief's phone"}),
             "disability_details": forms.TextInput(attrs={"placeholder": "If yes, specify your disability"}),
         }
-
-        exclude = ['student', 'status','academic_year']
